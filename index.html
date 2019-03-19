@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+   
+   
+</head>
+<body>
+
+<div id="app">
+<grafik></grafik>
+
+</div>
+
+<script src="https://www.google.com/jsapi"></script>
+<script>
+google.load('visualization', '1.0', {'packages':['corechart']});
+google.setOnLoadCallback(drawChart);
+</script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+Vue.component('grafik', {
+  template: `<div id="chart_div"></div>`
+})
+new Vue({
+  el: '#app',
+   data:function () {
+    return {
+     
+    }
+  },
+  methods: {
+    view: function(e) {
+	var data = new google.visualization.DataTable();
+	data.addColumn('string', 'Страна');
+	data.addColumn('number', 'Население');
+	data.addRows([
+		['Франция', 66200000],
+		['Германия', 80780000],
+		['Япония', 127103388],
+		['Аргентина', 42610981],
+		['Латвия', 1989500]
+	]);
+    var options = {
+		'title':'Кол-во населения',
+		'width':650,
+		'height':350,
+		'pieHole': 0.1,
+		'slices': {
+			4: {offset: 0.2},
+			2: {offset: 0.2},
+		},
+		'is3D': true,
+		'legend': 'left',
+		'pieStartAngle': 180,
+		'backgroundColor': {
+			'strokeWidth': 2
+		},
+		colors: ['red', 'blue', 'green', '#f3b49f', '#f6c7b6']
+	};
+ 
+	// Instantiate and draw our chart, passing in some options.
+	var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+	chart.draw(data, options);
+	}
+  },
+mounted(){
+	this.view();
+  }
+})
+</script>
+</body>
+</html>
